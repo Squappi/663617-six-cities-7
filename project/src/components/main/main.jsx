@@ -2,6 +2,8 @@ import React from 'react';
 import CitiCard from '../citi-card/citi-card';
 import PropTypes from 'prop-types';
 
+let COUNT = 0;
+
 function MainComponent(props) {
   const { cards } = props;
   return (
@@ -64,7 +66,7 @@ function MainComponent(props) {
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              {new Array(cards).fill('').map(() => <CitiCard key = {Math.random()} />)}
+              {new Array(cards).fill('').map(() => <CitiCard key = {COUNT++} />)}
             </div>
           </section>
           <div className="cities__right-section">
