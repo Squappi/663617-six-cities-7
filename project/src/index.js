@@ -6,6 +6,6 @@ const CARDS = 5;
 
 ReactDOM.render(
   <React.StrictMode>
-    <App cards = {CARDS} />
+    <App cardsCount = {CARDS} />
   </React.StrictMode>,
   document.getElementById('root'));

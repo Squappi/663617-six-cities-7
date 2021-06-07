@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 let COUNT = 0;
 
 function MainComponent(props) {
-  const { cards } = props;
+  const { cardsCount } = props;
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -66,7 +66,7 @@ function MainComponent(props) {
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              {new Array(cards).fill('').map(() => <CitiCard key = {COUNT++} />)}
+              {new Array(cardsCount).fill('').map(() => <CitiCard key = {COUNT++} />)}
             </div>
           </section>
           <div className="cities__right-section">
@@ -79,7 +79,7 @@ function MainComponent(props) {
 }
 
 MainComponent.propTypes = {
-  cards: PropTypes.number.isRequired,
+  cardsCount: PropTypes.number.isRequired,
 };
 
 export default MainComponent;
