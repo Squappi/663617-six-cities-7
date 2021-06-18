@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
+import cardsDescription from './mocks/offers';
 
-const CARDS = 5;
 
 ReactDOM.render(
   <React.StrictMode>
-    <App cardsCount = {CARDS} />
+    <App
+      cardsDescription = {cardsDescription}
+    />
   </React.StrictMode>,
   document.getElementById('root'));
