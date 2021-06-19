@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CitiCard from '../citi-card/citi-card';
 import PropTypes from 'prop-types';
 
 function MainComponent(props) {
   const { cardsDescription } = props;
+  const [activeCard, setActiveCard] = useState(null);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -93,7 +94,12 @@ function MainComponent(props) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {cardsDescription.map((currentCard) => <CitiCard key = {currentCard.id} card = {currentCard} />)}
+                {cardsDescription.map((currentCard) => (
+                  <CitiCard key={currentCard.id} onMouseEnter={() => {
+                    setActiveCard(currentCard.id);
+                  }} onMouseLeave={() => setActiveCard(null)} card={currentCard}
+                  />
+                ))}
               </div>
             </section>
             <div className="cities__right-section">

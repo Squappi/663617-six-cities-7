@@ -5,12 +5,12 @@ import { AppRoute } from '../../const';
 
 function FavoriteCard(props) {
   const { card } = props;
-  const { type, lowerSrc, price, day, rating, description } = card;
+  const { type, previewImage, price, day, rating, description } = card;
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to = {AppRoute.ROOM}>
-          <img className="place-card__image" src={lowerSrc} width={150} height={110} alt="Place img" />
+          <img className="place-card__image" src={previewImage} width={150} height={110} alt="Place img" />
         </Link>
       </div>
       <div className="favorites__card-info place-card__info">

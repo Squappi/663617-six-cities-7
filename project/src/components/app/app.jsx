@@ -9,7 +9,7 @@ import PropertyComponent from '../property/property';
 import NotFound from '../render/render';
 
 function App(props) {
-  const { cardsDescription } = props;
+  const { cardsDescription, comments } = props;
   return (
     <BrowserRouter>
       <Switch>
@@ -22,8 +22,11 @@ function App(props) {
         <Route exact path={AppRoute.LOGIN}>
           <LoginComponent />
         </Route>
-        <Route exact path={AppRoute.ROOM}>
-          <PropertyComponent />
+        <Route exact path={AppRoute.ROOM} render={(routeProps) => {
+          const card = cardsDescription.find((item) => item.id === Number(routeProps.match.params.id));
+          return <PropertyComponent card={card} comments = {comments}/>;
+        }}
+        >
         </Route>
         <Route>
           <NotFound />
@@ -35,6 +38,7 @@ function App(props) {
 
 App.propTypes = {
   cardsDescription: PropTypes.array.isRequired,
+  comments: PropTypes.array.isRequired,
 };
 
 export default App;
