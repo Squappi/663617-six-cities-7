@@ -5,9 +5,9 @@ import { useRef } from 'react';
 import useMap from '../../hooks/use-map/use-map';
 
 function Map(props) {
-  const { cardsDescription } = props;
+  const {cardsDescription} = props;
   const mapRef = useRef(null);
-  const map = useMap(mapRef, cardsDescription);
+  const map = useMap(mapRef, cardsDescription[0].city);
 
   const icon = leaflet.icon({
     iconUrl: 'img/pin.svg',
@@ -17,20 +17,18 @@ function Map(props) {
 
   useEffect(() => {
     if (map) {
-      cardsDescription.forEach((point) => {
+      cardsDescription.forEach(({location}) => {
         leaflet
-          .marker({
-            lat: point.lat,
-            lng: point.lng,
-          }, {
-            icon: icon,
-          })
+          .marker(
+            [location.latitude, location.longitude],
+            {icon: icon},
+          )
           .addTo(map);
       });
     }
-  }, [map, cardsDescription]);
+  }, [map, icon, cardsDescription]);
   return (
-    <div id="map"
+    <div
       style={{height: '100%'}}
       ref={mapRef}
     >

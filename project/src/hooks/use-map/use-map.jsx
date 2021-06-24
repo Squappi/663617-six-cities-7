@@ -5,10 +5,10 @@ function useMap(mapRef, city) {
   const [map, setMap] = useState(null);
 
   useEffect(() => {
-    if(mapRef.current !== null && map !== null) {
-      const instanse = leaflet.map(mapRef.current, {
-        center: [city.latitude, city.longitude],
-        zoom: city.zoom,
+    if(mapRef.current && !map) {
+      const instance = leaflet.map(mapRef.current, {
+        center: [city.location.latitude, city.location.longitude],
+        zoom: 12,
         zoomControl: false,
         marker: true,
       });
@@ -17,12 +17,12 @@ function useMap(mapRef, city) {
         .tileLayer(
           'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
           {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
           },
         )
-        .addTo(instanse);
+        .addTo(instance);
 
-      setMap(instanse);
+      setMap(instance);
     }
   }, [mapRef, map, city]);
 

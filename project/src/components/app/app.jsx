@@ -24,7 +24,7 @@ function App(props) {
         </Route>
         <Route exact path={AppRoute.ROOM} render={(routeProps) => {
           const card = cardsDescription.find((item) => item.id === Number(routeProps.match.params.id));
-          return <PropertyComponent card={card} comments = {comments}/>;
+          return <PropertyComponent card={card} nearCards={cardsDescription.slice(0, 3)} comments = {comments}/>;
         }}
         >
         </Route>

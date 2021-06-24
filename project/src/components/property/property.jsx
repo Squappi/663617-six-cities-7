@@ -8,7 +8,7 @@ import CommentComponent from '../comments/comment';
 import PlaceComponent from '../place-card/place-card';
 
 function PropertyComponent(props) {
-  const { card, comments } = props;
+  const { card, comments, nearCards } = props;
   const { type, goods, bedrooms, rating, price, maxAdults } = card;
   return (
     <div className="page">
@@ -145,7 +145,7 @@ function PropertyComponent(props) {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {<PlaceComponent />}
+              {nearCards.map((card)=><PlaceComponent key={card.id} card={card} />)}
             </div>
           </section>
         </div>
