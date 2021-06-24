@@ -145,7 +145,7 @@ function PropertyComponent(props) {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {nearCards.map((card)=><PlaceComponent key={card.id} card={card} />)}
+              {nearCards.map((placeCard)=><PlaceComponent key={placeCard.id} card={placeCard} />)}
             </div>
           </section>
         </div>
@@ -157,6 +157,7 @@ function PropertyComponent(props) {
 PropertyComponent.propTypes = {
   card: PropTypes.object.isRequired,
   comments: PropTypes.array.isRequired,
+  nearCards: PropTypes.array.isRequired,
 };
 
 export default PropertyComponent;

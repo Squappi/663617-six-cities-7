@@ -3,6 +3,7 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useRef } from 'react';
 import useMap from '../../hooks/use-map/use-map';
+import PropTypes from 'prop-types';
 
 function Map(props) {
   const {cardsDescription} = props;
@@ -36,9 +37,8 @@ function Map(props) {
   );
 }
 
-// Map.propTypes = {
-//   // city: propType.city.isRequired,
-//   cardsDescription: PropTypes.array.isRequired,
-// };
+Map.propTypes = {
+  cardsDescription: PropTypes.array.isRequired,
+};
 
 export default Map;
