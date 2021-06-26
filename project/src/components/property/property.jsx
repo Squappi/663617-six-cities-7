@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import FormComponent from '../form-comment/form-comment';
 import PropTypes from 'prop-types';
 import InsideListComponent from '../inside-list/inside-list';
-import CommentComponent from '../comments/comment';
 import PlaceComponent from '../place-card/place-card';
+import Map from '../map/map';
+import PropertyReviews from '../property-reviews/property-reviews';
 
 function PropertyComponent(props) {
   const { card, comments, nearCards } = props;
@@ -82,7 +82,7 @@ function PropertyComponent(props) {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: rating}}></span>
+                  <span style={{width: rating/ 5 * 100 + '%'}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">4.8</span>
@@ -130,16 +130,12 @@ function PropertyComponent(props) {
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  {comments.map((reviews) => <CommentComponent key={reviews.id} reviews={reviews}/>)}
-                </ul>
-                <FormComponent />
-              </section>
+              <PropertyReviews comments = {comments} />
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map cardsDescription={nearCards} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">

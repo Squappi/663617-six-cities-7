@@ -5,10 +5,10 @@ const comments = [
     'id': 1,
     'rating': 4,
     'user': {
-      'avatarUrl': 'img/1.png',
+      'avatarUrl': 'img/avatar-angelina.jpg',
       'id': 1,
       'isPro': false,
-      'name': 'Max',
+      'name': 'Angelina',
     },
   }, {
     'comment': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
@@ -16,7 +16,7 @@ const comments = [
     'id': 2,
     'rating': 3.8,
     'user': {
-      'avatarUrl': 'img/1.png',
+      'avatarUrl': 'img/avatar-max.jpg',
       'id': 2,
       'isPro': false,
       'name': 'Max',
@@ -27,7 +27,7 @@ const comments = [
     'id': 3,
     'rating': 4.5,
     'user': {
-      'avatarUrl': 'img/1.png',
+      'avatarUrl': 'img/avatar-max.jpg',
       'id': 3,
       'isPro': true,
       'name': 'Max',
