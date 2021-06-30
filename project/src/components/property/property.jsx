@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, TypeCard } from '../../const';
 import PropTypes from 'prop-types';
 import InsideListComponent from '../inside-list/inside-list';
-import PlaceComponent from '../place-card/place-card';
 import Map from '../map/map';
 import PropertyReviews from '../property-reviews/property-reviews';
+import CitiCard from '../citi-card/citi-card';
 
 function PropertyComponent(props) {
   const { card, comments, nearCards } = props;
   const { type, goods, bedrooms, rating, price, maxAdults } = card;
+  const [activeCard, setActiveCard] = useState(null);
   return (
     <div className="page">
       <header className="header">
@@ -141,7 +142,12 @@ function PropertyComponent(props) {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {nearCards.map((placeCard)=><PlaceComponent key={placeCard.id} card={placeCard} />)}
+              {nearCards.map((placeCard)=> {
+                <CitiCard key={placeCard.id} onMouseEnter={() => {
+                  setActiveCard(placeCard.id);
+                }} onMouseLeave={() => setActiveCard(null)} card={placeCard}
+                typeCard= {TypeCard.PLACE}
+                />;})}
             </div>
           </section>
         </div>

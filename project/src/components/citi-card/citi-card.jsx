@@ -2,17 +2,20 @@ import React from 'react';
 import cardsDescriptionProp from '../citi-card/citi-card.prop';
 import { Link } from 'react-router-dom';
 import propTypes from 'prop-types';
+import { TypeCard } from '../../const';
 
 function CitiCard(props) {
-  const { card, onMouseEnter, onMouseLeave} = props;
+  const { card, onMouseEnter, onMouseLeave, typeCard} = props;
   const { type, previewImage, price, rating, description} = card;
   return (
     <article className="cities__place-card place-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
+      { (typeCard === TypeCard.CITY) ?
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+        : null }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to = {`/offer/${card.id}`}>
+        <Link to = {(typeCard === TypeCard.CITY) ? `/offer/${card.id}`: '/#'}>
           <img className="place-card__image" src={previewImage} width={260} height={200} alt="Place pic" />
         </Link>
       </div>
@@ -48,6 +51,7 @@ CitiCard.propTypes = {
   card: cardsDescriptionProp,
   onMouseEnter: propTypes.func,
   onMouseLeave: propTypes.func,
+  typeCard: propTypes.string.isRequired,
 };
 
 export default CitiCard;

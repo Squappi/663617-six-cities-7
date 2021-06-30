@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import CitiCard from '../citi-card/citi-card';
 import PropTypes from 'prop-types';
 import Map from '../map/map';
+import { TypeCard } from '../../const';
 
 function MainComponent(props) {
   const { cardsDescription } = props;
@@ -99,6 +100,7 @@ function MainComponent(props) {
                   <CitiCard key={currentCard.id} onMouseEnter={() => {
                     setActiveCard(currentCard.id);
                   }} onMouseLeave={() => setActiveCard(null)} card={currentCard}
+                  typeCard= {TypeCard.CITY}
                   />
                 ))}
               </div>

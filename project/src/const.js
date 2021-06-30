@@ -4,3 +4,8 @@ export const AppRoute = {
   ROOM: '/offer/:id',
   ROOT: '/',
 };
+
+export const TypeCard = {
+  CITY: 'city',
+  PLACE: 'place',
+};
