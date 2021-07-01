@@ -1,23 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import cardsDescription from './mocks/offers';
 import comments from './mocks/review';
-import { reduser } from './store/reduser';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
+import offers from './mocks/offers';
+import {reducer} from './store/reduсer';
+import {ActionCreator} from './store/action';
 
 const store = createStore(
-  reduser,
+  reducer,
   composeWithDevTools(),
 );
+
+store.dispatch(ActionCreator.loadOffers(offers));
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App
-        cardsDescription = {cardsDescription}
         comments = {comments}
       />
     </Provider>

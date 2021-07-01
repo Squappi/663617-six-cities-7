@@ -18,14 +18,16 @@ function Map(props) {
 
   useEffect(() => {
     if (map) {
-      cardsDescription.forEach(({location}) => {
+      const markers = cardsDescription.map(({location}) =>
         leaflet
           .marker(
             [location.latitude, location.longitude],
             {icon: icon},
-          )
-          .addTo(map);
-      });
+          ));
+      markers.forEach((marker) => marker.addTo(map));
+      return () => {
+        markers.forEach((marker) => marker.removeFrom(map));
+      }
     }
   }, [map, icon, cardsDescription]);
   return (

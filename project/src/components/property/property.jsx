@@ -142,12 +142,15 @@ function PropertyComponent(props) {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {nearCards.map((placeCard)=> {
-                <CitiCard key={placeCard.id} onMouseEnter={() => {
-                  setActiveCard(placeCard.id);
-                }} onMouseLeave={() => setActiveCard(null)} card={placeCard}
-                typeCard= {TypeCard.PLACE}
-                />;})}
+              {nearCards.map((placeCard) => (
+                <CitiCard
+                  key={placeCard.id}
+                  onMouseEnter={() => {setActiveCard(placeCard.id);
+                  }}
+                  onMouseLeave={() => setActiveCard(null)}
+                  card={placeCard}
+                  typeCard={TypeCard.PLACE}
+                />))}
             </div>
           </section>
         </div>

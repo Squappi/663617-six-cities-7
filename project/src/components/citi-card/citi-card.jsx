@@ -4,17 +4,28 @@ import { Link } from 'react-router-dom';
 import propTypes from 'prop-types';
 import { TypeCard } from '../../const';
 
+const CityCardProperties ={
+  [TypeCard.CITY]: {
+    cardClass: 'cities__place-card',
+    imageClass: 'cities__image-wrapper',
+  },
+  [TypeCard.PLACE]: {
+    cardClass: 'near-places__card',
+    imageClass: 'near-places__image-wrapper',
+  },
+};
+
 function CitiCard(props) {
   const { card, onMouseEnter, onMouseLeave, typeCard} = props;
   const { type, previewImage, price, rating, description} = card;
   return (
-    <article className="cities__place-card place-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <article className={`${CityCardProperties[typeCard].cardClass} place-card`} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       { (typeCard === TypeCard.CITY) ?
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
         : null }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${CityCardProperties[typeCard].imageClass} place-card__image-wrapper`}>
         <Link to = {(typeCard === TypeCard.CITY) ? `/offer/${card.id}`: '/#'}>
           <img className="place-card__image" src={previewImage} width={260} height={200} alt="Place pic" />
         </Link>

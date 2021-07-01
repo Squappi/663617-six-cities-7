@@ -3,9 +3,11 @@ import CitiCard from '../citi-card/citi-card';
 import PropTypes from 'prop-types';
 import Map from '../map/map';
 import { TypeCard } from '../../const';
+import {connect} from 'react-redux';
+import CityList from '../city-list/city-list';
 
 function MainComponent(props) {
-  const { cardsDescription } = props;
+  const { cityOffers } = props;
   const [activeCard, setActiveCard] = useState(null);
   return (
     <div className="page page--gray page--main">
@@ -41,38 +43,7 @@ function MainComponent(props) {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active" href="/#">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
+            <CityList/>
           </section>
         </div>
         <div className="cities">
@@ -96,18 +67,21 @@ function MainComponent(props) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {cardsDescription.map((currentCard) => (
-                  <CitiCard key={currentCard.id} onMouseEnter={() => {
-                    setActiveCard(currentCard.id);
-                  }} onMouseLeave={() => setActiveCard(null)} card={currentCard}
-                  typeCard= {TypeCard.CITY}
+                {cityOffers.map((offer) => (
+                  <CitiCard
+                    key={offer.id}
+                    onMouseEnter={() => {
+                      setActiveCard(offer.id);
+                    }}
+                    onMouseLeave={() => setActiveCard(null)} card={offer}
+                    typeCard={TypeCard.CITY}
                   />
                 ))}
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map cardsDescription={cardsDescription} />
+                <Map cardsDescription={cityOffers} />
               </section>
             </div>
           </div>
@@ -118,7 +92,12 @@ function MainComponent(props) {
 }
 
 MainComponent.propTypes = {
-  cardsDescription: PropTypes.array.isRequired,
+  cityOffers: PropTypes.array.isRequired,
 };
 
-export default MainComponent;
+const mapStateToProps = (state) => ({
+  cityOffers: state.cityOffers,
+});
+
+export default connect(mapStateToProps, null)(MainComponent);
+
