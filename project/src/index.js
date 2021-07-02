@@ -6,8 +6,8 @@ import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import offers from './mocks/offers';
-import {reducer} from './store/reduсer';
 import {ActionCreator} from './store/action';
+import { reducer } from './store/reducer';
 
 const store = createStore(
   reducer,

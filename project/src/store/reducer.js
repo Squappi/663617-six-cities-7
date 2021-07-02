@@ -1,4 +1,5 @@
 import { SortType } from '../const';
+import { sortList } from '../sorting';
 import { ActionType } from './action';
 
 const initialState = {
@@ -9,23 +10,25 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case ActionType.CITY_CHANGE:
       return {
         ...state,
         city: action.payload,
-        cityOffers: state.listOffers.filter((offer) => offer.city.name === action.payload),
+        sortType: SortType.POPULAR,
+        cityOffers: sortList(state.listOffers.filter((offer) => offer.city.name === action.payload), SortType.POPULAR),
       };
     case ActionType.LIST_OF_OFFERS:
       return {
         ...state,
         listOffers: action.payload,
-        cityOffers: action.payload.filter((offer) => offer.city.name === state.city),
+        cityOffers: sortList(action.payload.filter((offer) => offer.city.name === state.city), state.sortType),
       };
     case ActionType.SORT_CHANGE:
       return {
         ...state,
         sortType: action.payload,
+        cityOffers: sortList(state.listOffers.filter((offer) => offer.city.name === state.city), action.payload),
       };
     default:
       return state;

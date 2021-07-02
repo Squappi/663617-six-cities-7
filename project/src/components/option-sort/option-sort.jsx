@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
@@ -7,12 +7,24 @@ const sortByPopular = ['Popular','Price: low to high','Price: high to low','Top 
 
 function PlacesSort({currentSort, changeSort}) {
   const [isOpenList, setOpenList] = useState(false);
+  const closeMenu = () => {
+    document.removeEventListener('click', closeMenu);
+    setOpenList(false);
+  };
+
+  useEffect(() => {
+    if (isOpenList) {
+      document.addEventListener('click', closeMenu);
+      return () => {
+        document.removeEventListener('click', closeMenu);
+      };
+    }
+  });
+
   return(
-    <form className="places__sorting" action="#" method="get"
-      onClick = {() => setOpenList(!isOpenList)}
-    >
+    <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex={0}>
+      <span className="places__sorting-type" tabIndex={0} onClick={() => setOpenList(!isOpenList)}>
         {currentSort}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
@@ -22,7 +34,10 @@ function PlacesSort({currentSort, changeSort}) {
         {sortByPopular.map((sort) =>
           (
             <li className={`places__option ${sort === currentSort ? 'places__option--active' : ''}`} key={sort} tabIndex={0}
-              onClick={() => changeSort(sort)}
+              onClick={() => {
+                setOpenList(false);
+                changeSort(sort);
+              }}
             >
               {sort}
             </li>
