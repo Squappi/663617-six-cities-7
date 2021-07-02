@@ -1,9 +1,11 @@
+import { SortType } from '../const';
 import { ActionType } from './action';
 
 const initialState = {
   city: 'Amsterdam',
   listOffers: [],
   cityOffers: [],
+  sortType: SortType.POPULAR,
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,6 +21,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         listOffers: action.payload,
         cityOffers: action.payload.filter((offer) => offer.city.name === state.city),
+      };
+    case ActionType.SORT_CHANGE:
+      return {
+        ...state,
+        sortType: action.payload,
       };
     default:
       return state;

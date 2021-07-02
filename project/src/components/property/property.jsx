@@ -135,7 +135,7 @@ function PropertyComponent(props) {
             </div>
           </div>
           <section className="property__map map">
-            <Map cardsDescription={nearCards} />
+            <Map activeCard={activeCard} cardsDescription={nearCards} />
           </section>
         </section>
         <div className="container">

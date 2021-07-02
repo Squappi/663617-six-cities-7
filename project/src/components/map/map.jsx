@@ -6,7 +6,7 @@ import useMap from '../../hooks/use-map/use-map';
 import PropTypes from 'prop-types';
 
 function Map(props) {
-  const {cardsDescription} = props;
+  const {cardsDescription, activeCard} = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, cardsDescription[0].city);
 
@@ -16,20 +16,26 @@ function Map(props) {
     iconAnchor: [15, 30],
   });
 
+  const activeIcon = leaflet.icon({
+    iconUrl: 'img/pin-active.svg',
+    iconSize: [30,30],
+    iconAnchor: [15,30],
+  });
+
   useEffect(() => {
     if (map) {
-      const markers = cardsDescription.map(({location}) =>
+      const markers = cardsDescription.map(({location, id}) =>
         leaflet
           .marker(
             [location.latitude, location.longitude],
-            {icon: icon},
+            {icon: (id === activeCard ? activeIcon : icon)},
           ));
       markers.forEach((marker) => marker.addTo(map));
       return () => {
         markers.forEach((marker) => marker.removeFrom(map));
-      }
+      };
     }
-  }, [map, icon, cardsDescription]);
+  }, [map, icon, cardsDescription, activeCard, activeIcon]);
   return (
     <div
       style={{height: '100%'}}
@@ -40,6 +46,7 @@ function Map(props) {
 }
 
 Map.propTypes = {
+  activeCard: PropTypes.number,
   cardsDescription: PropTypes.array.isRequired,
 };
 
