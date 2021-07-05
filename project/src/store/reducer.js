@@ -1,4 +1,4 @@
-import { SortType } from '../const';
+import { AuthorizationStatus, SortType } from '../const';
 import { sortList } from '../sorting';
 import { ActionType } from './action';
 
@@ -7,6 +7,7 @@ const initialState = {
   listOffers: [],
   cityOffers: [],
   sortType: SortType.POPULAR,
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
 };
 
 const reducer = (state = initialState, action) => {
@@ -29,6 +30,21 @@ const reducer = (state = initialState, action) => {
         ...state,
         sortType: action.payload,
         cityOffers: sortList(state.listOffers.filter((offer) => offer.city.name === state.city), action.payload),
+      };
+    case ActionType.LOAD_DATA_OFFERS:
+      return {
+        ...state,
+        cityOffers: action.payload,
+      };
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
+    case ActionType.LOGOUT:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
     default:
       return state;

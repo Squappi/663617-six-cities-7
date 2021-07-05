@@ -3,18 +3,27 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import comments from './mocks/review';
 import {Provider} from 'react-redux';
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
-import offers from './mocks/offers';
 import {ActionCreator} from './store/action';
 import { reducer } from './store/reducer';
+import thunk from 'redux-thunk';
+import { axiosLoadOffers, checkAuth } from './servies/api-actions';
+import { createApi } from './servies/api';
+import { AuthorizationStatus } from './const';
+
+const api = createApi(
+  () => store.dispatch(ActionCreator.requireAuhtorization(AuthorizationStatus.NO_AUTH)),
+);
 
 const store = createStore(
   reducer,
-  composeWithDevTools(),
+  composeWithDevTools(
+    applyMiddleware(thunk.withExtraArgument(api))),
 );
 
-store.dispatch(ActionCreator.loadOffers(offers));
+store.dispatch(checkAuth());
+store.dispatch(axiosLoadOffers());
 
 ReactDOM.render(
   <React.StrictMode>

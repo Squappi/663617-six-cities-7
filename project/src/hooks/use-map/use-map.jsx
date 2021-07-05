@@ -5,10 +5,10 @@ function useMap(mapRef, city) {
   const [map, setMap] = useState(null);
 
   useEffect(() => {
-    if(mapRef.current && !map) {
-      const instance = leaflet.map(mapRef.current, {
+    if(mapRef.current !== null && !map !== null) {
+      const instance = leaflet.map(mapRef.current).setView( {
         center: [city.location.latitude, city.location.longitude],
-        zoom: 12,
+        zoom: city.location.zoom,
         zoomControl: false,
         marker: true,
       });
