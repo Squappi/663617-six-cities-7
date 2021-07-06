@@ -8,6 +8,7 @@ const initialState = {
   cityOffers: [],
   sortType: SortType.POPULAR,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
+  isDataLoader: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -35,6 +36,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         cityOffers: action.payload,
+        isDataLoader: true,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {

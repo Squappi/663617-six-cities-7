@@ -8,9 +8,17 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import PropertyComponent from '../property/property';
 import NotFound from '../render/render';
 import {connect} from 'react-redux';
+import { isCheckedAuth } from '../../store/action';
+import LoadingScreen from '../loadingScreen/LoadingScreen';
 
 function App(props) {
-  const { offers, comments } = props;
+  const { offers, comments, authorizationStatus, isDataLoader } = props;
+
+  if (isCheckedAuth(authorizationStatus) || isDataLoader) {
+    return (
+      <LoadingScreen />
+    );
+  }
   return (
     <BrowserRouter>
       <Switch>
@@ -40,10 +48,14 @@ function App(props) {
 App.propTypes = {
   offers: PropTypes.array.isRequired,
   comments: PropTypes.array.isRequired,
+  isDataLoader: PropTypes.bool.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   offers: state.listOffers,
+  authorizationStatus: state.authorizationStatus,
+  isDataLoader: state.isDataLoader,
 });
 
 export default connect(mapStateToProps, null)(App);

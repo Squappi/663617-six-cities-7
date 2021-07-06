@@ -2,7 +2,7 @@ import { AuthorizationStatus } from '../const';
 import { ActionCreator } from '../store/action';
 
 const ApiRoute = {
-  OFFER_API: 'offerApi',
+  OFFER_API: 'hotels',
   LOGIN: '/login',
   LOGOUT: '/logout',
 };
@@ -10,14 +10,6 @@ const ApiRoute = {
 const adaptToClient = (offer) => {
   const adapteOffer = {
     ...offer,
-    city: {
-      ...offer.city,
-      location: {
-        lat: offer.city.location.latitude,
-        lng: offer.city.location.longitude,
-        zoom: offer.city.location.zoom,
-      },
-    },
     host: {
       ...offer.host,
       avatarUrl: offer.host.avatar_url,
@@ -27,23 +19,14 @@ const adaptToClient = (offer) => {
     isPremium: offer.is_premium,
     maxAdults: offer.max_adults,
     previewImage: offer.preview_image,
-    location: {
-      ...offer.location,
-      lat: offer.location.latitude,
-      lng: offer.location.longitude,
-    },
   };
 
-  delete adapteOffer.city.location.latitude;
-  delete adapteOffer.city.location.longitude;
   delete adapteOffer.host.avatar_url;
   delete adapteOffer.host.is_pro;
   delete adapteOffer.is_favorite;
   delete adapteOffer.is_premium;
   delete adapteOffer.max_adults;
   delete adapteOffer.preview_image;
-  delete adapteOffer.location.latitude;
-  delete adapteOffer.location.longitude;
 
   return adapteOffer;
 };

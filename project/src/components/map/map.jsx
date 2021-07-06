@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 function Map(props) {
   const {cardsDescription, activeCard} = props;
   const mapRef = useRef(null);
-  const map = useMap(mapRef, cardsDescription[0].city);
+  const map = useMap(mapRef, cardsDescription[0]?.city);
 
   const icon = leaflet.icon({
     iconUrl: 'img/pin.svg',
