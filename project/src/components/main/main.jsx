@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import CitiCard from '../citi-card/citi-card';
 import PropTypes from 'prop-types';
 import Map from '../map/map';
-import { TypeCard } from '../../const';
+import { AppRoute, TypeCard } from '../../const';
 import {connect} from 'react-redux';
 import CityList from '../city-list/city-list';
 import PlacesSort from '../option-sort/option-sort';
-import { sortList } from '../../sorting';
-
+import { Link } from 'react-router-dom';
+import { logout } from '../../servies/api-actions';
 
 function MainComponent(props) {
-  const { cityOffers } = props;
+  const { cityOffers, logoutProfile } = props;
   const [activeCard, setActiveCard] = useState(null);
   return (
     <div className="page page--gray page--main">
@@ -32,9 +32,16 @@ function MainComponent(props) {
                   </a>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="/#">
+                  <Link
+                    className="header__nav-link"
+                    to={AppRoute.LOGIN}
+                    onClick ={(evt) => {
+                      evt.preventDefault();
+                      logoutProfile();
+                    }}
+                  >
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -82,11 +89,18 @@ function MainComponent(props) {
 
 MainComponent.propTypes = {
   cityOffers: PropTypes.array.isRequired,
+  logoutProfile: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   cityOffers: state.cityOffers,
 });
 
-export default connect(mapStateToProps, null)(MainComponent);
+const mapDispatchToProps = (dispatch) => ({
+  logoutProfile() {
+    dispatch(logout());
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainComponent);
 

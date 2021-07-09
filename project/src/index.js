@@ -11,6 +11,7 @@ import thunk from 'redux-thunk';
 import { axiosLoadOffers, checkAuth } from './servies/api-actions';
 import { createApi } from './servies/api';
 import { AuthorizationStatus } from './const';
+import { redirect } from './components/middlewares/redirect';
 
 const api = createApi(
   () => store.dispatch(ActionCreator.requireAuhtorization(AuthorizationStatus.NO_AUTH)),
@@ -19,7 +20,9 @@ const api = createApi(
 const store = createStore(
   reducer,
   composeWithDevTools(
-    applyMiddleware(thunk.withExtraArgument(api))),
+    applyMiddleware(thunk.withExtraArgument(api)),
+    applyMiddleware(redirect),
+  ),
 );
 
 store.dispatch(checkAuth());

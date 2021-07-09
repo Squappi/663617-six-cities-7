@@ -1,4 +1,4 @@
-import { AuthorizationStatus } from "../const";
+import { AuthorizationStatus } from '../const';
 
 export const ActionType = {
   LIST_OF_OFFERS: 'offers/listOfOffers',
@@ -7,6 +7,7 @@ export const ActionType = {
   LOAD_DATA_OFFERS: 'data/loadDataOffers',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
+  REDIRECT_TO_ROUTE: 'redirect/redirectToRoute',
 };
 
 
@@ -33,6 +34,10 @@ export const ActionCreator = {
   }),
   logout: () => ({
     type: ActionType.LOGOUT,
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
   }),
 };
 
