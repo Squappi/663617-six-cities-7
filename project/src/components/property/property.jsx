@@ -7,9 +7,11 @@ import Map from '../map/map';
 import PropertyReviews from '../property-reviews/property-reviews';
 import CitiCard from '../citi-card/citi-card';
 
+const MAX_IMAGES = 6;
+
 function PropertyComponent(props) {
   const { card, comments, nearCards } = props;
-  const { type, goods, bedrooms, rating, price, maxAdults } = card;
+  const { type, goods, bedrooms, rating, price, maxAdults, host, description,images, isPremium, isFavorite } = card;
   const [activeCard, setActiveCard] = useState(null);
   return (
     <div className="page">
@@ -45,36 +47,23 @@ function PropertyComponent(props) {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="img studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="img studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="img studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="img studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="img studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="img studio" />
-              </div>
+              {images.slice(0,MAX_IMAGES).map((imageUrl) => (
+                <div key={imageUrl} className="property__image-wrapper">
+                  <img className="property__image" src={imageUrl} alt={type} />
+                </div>))}
             </div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
+              {isPremium &&
               <div className="property__mark">
                 <span>Premium</span>
-              </div>
+              </div>}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   Beautiful &amp; luxurious studio at great location
                 </h1>
-                <button className="property__bookmark-button button" type="button">
+                <button className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active' : ''}`} type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -112,22 +101,20 @@ function PropertyComponent(props) {
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                  <div className={`property__avatar-wrapper ${host.isPro ? 'property__avatar-wrapper--pro': ''} user__avatar-wrapper`}>
+                    <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
                     Angelina
                   </span>
+                  {host.isPro &&
                   <span className="property__user-status">
                     Pro
-                  </span>
+                  </span>}
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                    {description}
                   </p>
                 </div>
               </div>

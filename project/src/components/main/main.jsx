@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import CitiCard from '../citi-card/citi-card';
 import PropTypes from 'prop-types';
 import Map from '../map/map';
-import { AppRoute, TypeCard } from '../../const';
+import { AuthorizationStatus, TypeCard } from '../../const';
 import {connect} from 'react-redux';
 import CityList from '../city-list/city-list';
 import PlacesSort from '../option-sort/option-sort';
-import { Link } from 'react-router-dom';
 import { logout } from '../../servies/api-actions';
+import SignIn from '../sign-in/sign-in';
+import SignOut from '../sign-out/sign-out';
 
 function MainComponent(props) {
-  const { cityOffers, logoutProfile } = props;
+  const { cityOffers, authorizationStatus } = props;
   const [activeCard, setActiveCard] = useState(null);
   return (
     <div className="page page--gray page--main">
@@ -22,29 +23,7 @@ function MainComponent(props) {
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
               </a>
             </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="/#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <Link
-                    className="header__nav-link"
-                    to={AppRoute.LOGIN}
-                    onClick ={(evt) => {
-                      evt.preventDefault();
-                      logoutProfile();
-                    }}
-                  >
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
+            {authorizationStatus === AuthorizationStatus.AUTH ? <SignOut /> : <SignIn/>}
           </div>
         </div>
       </header>
@@ -89,7 +68,7 @@ function MainComponent(props) {
 
 MainComponent.propTypes = {
   cityOffers: PropTypes.array.isRequired,
-  logoutProfile: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({

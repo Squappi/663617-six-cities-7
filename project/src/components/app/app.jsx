@@ -10,7 +10,7 @@ import NotFound from '../render/render';
 import {connect} from 'react-redux';
 import { isCheckedAuth } from '../../store/action';
 import LoadingScreen from '../loadingScreen/LoadingScreen';
-import { PrivateRoute } from '../private-route/private-route';
+import PrivateRoute from '../private-route/private-route';
 import browserHistory from '../browser-history/browser-history';
 
 
@@ -26,7 +26,7 @@ function App(props) {
     <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
-          <MainComponent cardsDescription = {offers}/>
+          <MainComponent cardsDescription = {offers} authorizationStatus={authorizationStatus}/>
         </Route>
         <PrivateRoute
           exact

@@ -40,19 +40,19 @@ export const axiosLoadOffers = () => (dispatch, _getState, api) => (
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.LOGIN)
-    .then(() => dispatch(ActionCreator.requireAuhtorization(AuthorizationStatus.NO_AUTH)))
+    .then(() => dispatch(ActionCreator.requireAuhtorization(AuthorizationStatus.AUTH)))
     .catch(() => {})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
-  api.get(ApiRoute.LOGIN, {login, password})
+  api.post(ApiRoute.LOGIN, {login, password})
     .then(({data}) => localStorage.setItem('token', data.token))
     .then(() => dispatch(ActionCreator.requireAuhtorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT)))
+    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.FAVORITES)))
 );
 
 export const logout = () => (dispatch, _getState, api) => (
-  api.get(ApiRoute.LOGOUT)
+  api.delete(ApiRoute.LOGOUT)
     .then(() => localStorage.removeItem('token'))
     .then(() => dispatch(ActionCreator.logout))
 );

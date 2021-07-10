@@ -17,14 +17,14 @@ const CityCardProperties ={
 
 function CitiCard(props) {
   const { card, onMouseEnter, onMouseLeave, typeCard} = props;
-  const { type, previewImage, price, rating, description} = card;
+  const { type, previewImage, price, rating, description, isPremium, isFavorite} = card;
+
   return (
     <article className={`${CityCardProperties[typeCard].cardClass} place-card`} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      { (typeCard === TypeCard.CITY) ?
+      {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
-        </div>
-        : null }
+        </div>}
       <div className={`${CityCardProperties[typeCard].imageClass} place-card__image-wrapper`}>
         <Link to = {(typeCard === TypeCard.CITY) ? `/offer/${card.id}`: '/#'}>
           <img className="place-card__image" src={previewImage} width={260} height={200} alt="Place pic" />
@@ -36,7 +36,7 @@ function CitiCard(props) {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button className={`place-card__bookmark-button button ${isFavorite && 'place-card__bookmark-button--active'}`} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
