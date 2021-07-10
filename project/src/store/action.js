@@ -4,7 +4,6 @@ export const ActionType = {
   LIST_OF_OFFERS: 'offers/listOfOffers',
   CITY_CHANGE: 'offers/cityChange',
   SORT_CHANGE: 'sort/sortChange',
-  LOAD_DATA_OFFERS: 'data/loadDataOffers',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
   REDIRECT_TO_ROUTE: 'redirect/redirectToRoute',
@@ -42,4 +41,4 @@ export const ActionCreator = {
 };
 
 export const isCheckedAuth = (authorizationStatus) =>
-  authorizationStatus === AuthorizationStatus.UNKNOWN;
+  authorizationStatus !== AuthorizationStatus.UNKNOWN;

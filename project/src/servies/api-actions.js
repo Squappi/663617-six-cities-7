@@ -1,5 +1,5 @@
-import { AppRoute, AuthorizationStatus } from '../const';
-import { ActionCreator } from '../store/action';
+import {AppRoute, AuthorizationStatus} from '../const';
+import {ActionCreator} from '../store/action';
 
 const ApiRoute = {
   OFFER_API: 'hotels',
@@ -41,7 +41,7 @@ export const axiosLoadOffers = () => (dispatch, _getState, api) => (
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.LOGIN)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .catch(() => {})
+    .catch(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
 );
 
 export const loginAuth = ({login, password}) => (dispatch, _getState, api) => (
@@ -55,5 +55,5 @@ export const loginAuth = ({login, password}) => (dispatch, _getState, api) => (
 export const logout = () => (dispatch, _getState, api) => (
   api.delete(ApiRoute.LOGOUT)
     .then(() => localStorage.removeItem('token'))
-    .then(() => dispatch(ActionCreator.logout))
+    .then(() => dispatch(ActionCreator.logout()))
 );

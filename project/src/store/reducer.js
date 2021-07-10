@@ -25,18 +25,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         listOffers: action.payload,
         cityOffers: sortList(action.payload.filter((offer) => offer.city.name === state.city), state.sortType),
+        isDataLoaded: true,
       };
-    case ActionType.SORT_CHANGE:
-      return {
+    case ActionType.SORT_CHANGE:return {
         ...state,
         sortType: action.payload,
         cityOffers: sortList(state.listOffers.filter((offer) => offer.city.name === state.city), action.payload),
-      };
-    case ActionType.LOAD_DATA_OFFERS:
-      return {
-        ...state,
-        cityOffers: action.payload,
-        isDataLoaded: true,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {

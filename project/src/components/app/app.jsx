@@ -17,7 +17,7 @@ import browserHistory from '../browser-history/browser-history';
 function App(props) {
   const { offers, comments, authorizationStatus, isDataLoaded } = props;
 
-  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+  if (!isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen />
     );
@@ -39,9 +39,6 @@ function App(props) {
           <LoginComponent authorizationStatus={authorizationStatus}/>
         </Route>
         <Route exact path={AppRoute.ROOM} render={(routeProps) => {
-          if(offers.length === 0) {
-            return null;
-          }
           const card = offers.find((item) => item.id === Number(routeProps.match.params.id));
           return <PropertyComponent card={card} nearCards={offers.slice(0, 3)} comments = {comments}/>;
         }}
