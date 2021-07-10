@@ -14,7 +14,7 @@ import { AuthorizationStatus } from './const';
 import { redirect } from './components/middlewares/redirect';
 
 const api = createApi(
-  () => store.dispatch(ActionCreator.requireAuhtorization(AuthorizationStatus.NO_AUTH)),
+  () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)),
 );
 
 const store = createStore(

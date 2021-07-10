@@ -28,7 +28,7 @@ export const ActionCreator = {
     type: ActionType.LOAD_OFFERS,
     payload: offers,
   }),
-  requireAuhtorization: (status) => ({
+  requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
   }),

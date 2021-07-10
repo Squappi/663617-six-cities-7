@@ -39,6 +39,9 @@ function App(props) {
           <LoginComponent authorizationStatus={authorizationStatus}/>
         </Route>
         <Route exact path={AppRoute.ROOM} render={(routeProps) => {
+          if(offers.length === 0) {
+            return null;
+          }
           const card = offers.find((item) => item.id === Number(routeProps.match.params.id));
           return <PropertyComponent card={card} nearCards={offers.slice(0, 3)} comments = {comments}/>;
         }}

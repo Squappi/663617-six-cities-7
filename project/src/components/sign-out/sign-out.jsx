@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { logout } from '../../servies/api-actions';
-import SignIn from '../sign-in/sign-in';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -36,16 +35,16 @@ function SignOut(props) {
   );
 }
 
-SignIn.propTypes = {
+SignOut.propTypes = {
   logOut: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   logOut() {
-    dispatch(logout);
+    dispatch(logout());
   },
 });
 
 export {SignOut};
 
-export default connect(null, mapDispatchToProps)(SignIn);
+export default connect(null, mapDispatchToProps)(SignOut);

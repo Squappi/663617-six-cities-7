@@ -3,7 +3,7 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login } from '../../servies/api-actions';
+import { loginAuth } from '../../servies/api-actions';
 
 function LoginComponent({onSubmit, authorizationStatus}) {
   const loginRef = useRef();
@@ -78,10 +78,7 @@ function LoginComponent({onSubmit, authorizationStatus}) {
                   required=""
                 />
               </div>
-              <button className="login__submit form__submit button"
-                type="submit"
-                onClick={() => history.push(AppRoute.ROOT)}
-              >
+              <button className="login__submit form__submit button" type="submit">
               Sign in
               </button>
             </form>
@@ -106,7 +103,7 @@ LoginComponent.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(authData) {
-    dispatch(login(authData));
+    dispatch(loginAuth(authData));
   },
 });
 
