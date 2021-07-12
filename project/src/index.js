@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import comments from './mocks/review';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
@@ -31,9 +30,7 @@ store.dispatch(axiosLoadOffers());
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App
-        comments = {comments}
-      />
+      <App/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

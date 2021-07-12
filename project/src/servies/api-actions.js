@@ -1,14 +1,15 @@
 import {AppRoute, AuthorizationStatus} from '../const';
-import {ActionCreator} from '../store/action';
+import {ActionCreator, ActionType} from '../store/action';
 
 const ApiRoute = {
   OFFER_API: 'hotels',
   LOGIN: '/login',
   LOGOUT: '/logout',
+  COMMENTS: '/comments',
 };
 
 const adaptToClient = (offer) => {
-  const adapteOffer = {
+  const adaptedOffer = {
     ...offer,
     host: {
       ...offer.host,
@@ -21,14 +22,30 @@ const adaptToClient = (offer) => {
     previewImage: offer.preview_image,
   };
 
-  delete adapteOffer.host.avatar_url;
-  delete adapteOffer.host.is_pro;
-  delete adapteOffer.is_favorite;
-  delete adapteOffer.is_premium;
-  delete adapteOffer.max_adults;
-  delete adapteOffer.preview_image;
+  delete adaptedOffer.host.avatar_url;
+  delete adaptedOffer.host.is_pro;
+  delete adaptedOffer.is_favorite;
+  delete adaptedOffer.is_premium;
+  delete adaptedOffer.max_adults;
+  delete adaptedOffer.preview_image;
 
-  return adapteOffer;
+  return adaptedOffer;
+};
+
+const adaptToReviewsClient = (review) => {
+  const adaptedRewiew = {
+    ...review,
+    user: {
+      ...review.user,
+      isPro: review.user.is_pro,
+      avatarUrl: review.user.avatar_url,
+    },
+  };
+
+  delete adaptedRewiew.user.is_pro;
+  delete adaptedRewiew.user.avatar_url;
+
+  return adaptedRewiew;
 };
 
 
@@ -36,6 +53,17 @@ export const axiosLoadOffers = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.OFFER_API)
     .then(({data}) => data.map(adaptToClient))
     .then((offers) => dispatch(ActionCreator.loadOffers(offers)))
+);
+
+export const axiosLoadOffersId = (id) => (dispatch, _getState, api) => (
+  api.get(`${ApiRoute.OFFER_API}/${id}`)
+    .then((data) => data.dispatch(ActionCreator.loadOffer(adaptToClient(data))))
+);
+
+export const axiosLoadComments = (id) => (dispatch, _getState, api) => (
+  api.get(`${ApiRoute.COMMENTS}/${id}`)
+    .then(({data}) => data.map(adaptToReviewsClient))
+    .then((reviews) => dispatch(ActionCreator.loadComments(reviews)))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (

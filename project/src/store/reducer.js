@@ -5,7 +5,9 @@ import { ActionType } from './action';
 const initialState = {
   city: 'Amsterdam',
   listOffers: [],
+  offer: [],
   cityOffers: [],
+  listComments: [],
   sortType: SortType.POPULAR,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
@@ -27,10 +29,21 @@ const reducer = (state = initialState, action) => {
         cityOffers: sortList(action.payload.filter((offer) => offer.city.name === state.city), state.sortType),
         isDataLoaded: true,
       };
-    case ActionType.SORT_CHANGE:return {
+    case ActionType.SORT_CHANGE:
+      return {
         ...state,
         sortType: action.payload,
         cityOffers: sortList(state.listOffers.filter((offer) => offer.city.name === state.city), action.payload),
+      };
+    case ActionType.LOAD_OFFER:
+      return {
+        ...state,
+        offer: action.payload,
+      };
+    case ActionType.LIST_OF_COMMENTS:
+      return {
+        ...state,
+        listComments: action.payload,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {

@@ -63,6 +63,7 @@ const mapStateToProps = (state) => ({
   offers: state.listOffers,
   authorizationStatus: state.authorizationStatus,
   isDataLoaded: state.isDataLoaded,
+  comments: state.listComments,
 });
 
 export default connect(mapStateToProps, null)(App);

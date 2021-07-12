@@ -2,11 +2,13 @@ import { AuthorizationStatus } from '../const';
 
 export const ActionType = {
   LIST_OF_OFFERS: 'offers/listOfOffers',
+  LOAD_OFFER: 'offer/loadOffer',
   CITY_CHANGE: 'offers/cityChange',
   SORT_CHANGE: 'sort/sortChange',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
   REDIRECT_TO_ROUTE: 'redirect/redirectToRoute',
+  LIST_OF_COMMENTS: 'comments/listOfComments',
 };
 
 
@@ -15,6 +17,14 @@ export const ActionCreator = {
     type: ActionType.LIST_OF_OFFERS,
     payload: offers,
   }),
+  loadOffer: (offer) => ({
+    type: ActionType.LOAD_OFFER,
+    payload: offer,
+  }),
+  loadComments: (reviews) => ({
+    type: ActionCreator.LIST_OF_COMMENTS,
+    payload: reviews,
+  }),
   changeCity: (city) => ({
     type: ActionType.CITY_CHANGE,
     payload: city,
@@ -22,10 +32,6 @@ export const ActionCreator = {
   sortChange: (type) => ({
     type: ActionType.SORT_CHANGE,
     payload: type,
-  }),
-  loadDataOffers: (offers) => ({
-    type: ActionType.LOAD_OFFERS,
-    payload: offers,
   }),
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
