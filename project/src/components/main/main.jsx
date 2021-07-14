@@ -73,6 +73,7 @@ MainComponent.propTypes = {
 
 const mapStateToProps = (state) => ({
   cityOffers: state.cityOffers,
+  authorizationStatus: state.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({

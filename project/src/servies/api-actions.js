@@ -1,5 +1,5 @@
 import {AppRoute, AuthorizationStatus} from '../const';
-import {ActionCreator, ActionType} from '../store/action';
+import {ActionCreator} from '../store/action';
 
 const ApiRoute = {
   OFFER_API: 'hotels',
@@ -60,10 +60,16 @@ export const axiosLoadOffersId = (id) => (dispatch, _getState, api) => (
     .then((data) => data.dispatch(ActionCreator.loadOffer(adaptToClient(data))))
 );
 
-export const axiosLoadComments = (id) => (dispatch, _getState, api) => (
-  api.get(`${ApiRoute.COMMENTS}/${id}`)
+export const axiosLoadComments = (id) => (dispatch, _getState, api) => {
+  dispatch(ActionCreator.loadComments(null));
+  return api.get(`${ApiRoute.COMMENTS}/${id}`)
     .then(({data}) => data.map(adaptToReviewsClient))
-    .then((reviews) => dispatch(ActionCreator.loadComments(reviews)))
+    .then((reviews) => dispatch(ActionCreator.loadComments(reviews)));
+};
+
+export const axiosSendComments = (id, rating, comment) => (dispatch, _getState, api) => (
+  api.post(`${ApiRoute.COMMENTS}/${id}`,{rating, comment})
+    .then(({data}) => dispatch(ActionCreator.updateReview(data.map(adaptToReviewsClient))))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (

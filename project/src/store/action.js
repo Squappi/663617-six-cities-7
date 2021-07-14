@@ -9,6 +9,7 @@ export const ActionType = {
   LOGOUT: 'user/logout',
   REDIRECT_TO_ROUTE: 'redirect/redirectToRoute',
   LIST_OF_COMMENTS: 'comments/listOfComments',
+  UPDATE_REVIEW: '/comments/updateReview',
 };
 
 
@@ -22,8 +23,12 @@ export const ActionCreator = {
     payload: offer,
   }),
   loadComments: (reviews) => ({
-    type: ActionCreator.LIST_OF_COMMENTS,
+    type: ActionType.LIST_OF_COMMENTS,
     payload: reviews,
+  }),
+  updateReview: (review) => ({
+    type: ActionType.UPDATE_REVIEW,
+    payload: review,
   }),
   changeCity: (city) => ({
     type: ActionType.CITY_CHANGE,

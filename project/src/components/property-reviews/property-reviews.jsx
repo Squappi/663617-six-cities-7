@@ -11,7 +11,7 @@ function PropertyReviews(props) {
       <ul className="reviews__list">
         {comments.map((reviews) => <CommentComponent key={reviews.id} reviews={reviews}/>)}
       </ul>
-      <FormComponent />
+      <FormComponent comments={comments}/>
     </section>
   );
 }

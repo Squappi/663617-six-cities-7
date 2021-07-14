@@ -1,10 +1,26 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { axiosSendComments } from '../../servies/api-actions';
 
-function FormComponent() {
-  const [userComment, setUserComment] = useState(null);
+function FormComponent(props) {
+  const {comments} = props;
+  const {id} = comments;
+
+  const [userComment, setUserComment] = useState();
   const [userRating, setUserRating] = useState(null);
+
+  const dispatch = useDispatch();
+
   return (
-    <form className="reviews__form form" action="/#" method="post">
+    <form className="reviews__form form"
+      action="/#"
+      method="post"
+      onSubmit={((evt)=> {
+        evt.preventDefault();
+        dispatch(axiosSendComments(id, {userRating, userComment}));
+      })}
+    >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating"
         onChange = {(evt) => {
@@ -50,6 +66,7 @@ function FormComponent() {
       <textarea className="reviews__textarea form__textarea"
         id="review"
         name="review"
+        value={userComment}
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={(evt) =>{
           const target = evt.target.value;
@@ -66,5 +83,10 @@ function FormComponent() {
     </form>
   );
 }
+
+FormComponent.propTypes = {
+  comments: PropTypes.array.isRequired,
+};
+
 
 export default FormComponent;

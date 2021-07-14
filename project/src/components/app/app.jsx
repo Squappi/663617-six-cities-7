@@ -15,7 +15,7 @@ import browserHistory from '../browser-history/browser-history';
 
 
 function App(props) {
-  const { offers, comments, authorizationStatus, isDataLoaded } = props;
+  const { offers, authorizationStatus, isDataLoaded } = props;
 
   if (!isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
@@ -26,7 +26,7 @@ function App(props) {
     <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
-          <MainComponent cardsDescription = {offers} authorizationStatus={authorizationStatus}/>
+          <MainComponent cardsDescription = {offers}/>
         </Route>
         <PrivateRoute
           exact
@@ -36,11 +36,11 @@ function App(props) {
         >
         </PrivateRoute>
         <Route exact path={AppRoute.LOGIN}>
-          <LoginComponent authorizationStatus={authorizationStatus}/>
+          <LoginComponent/>
         </Route>
         <Route exact path={AppRoute.ROOM} render={(routeProps) => {
           const card = offers.find((item) => item.id === Number(routeProps.match.params.id));
-          return <PropertyComponent card={card} nearCards={offers.slice(0, 3)} comments = {comments}/>;
+          return <PropertyComponent card={card} nearCards={offers.slice(0, 3)}/>;
         }}
         >
         </Route>
@@ -54,7 +54,6 @@ function App(props) {
 
 App.propTypes = {
   offers: PropTypes.array.isRequired,
-  comments: PropTypes.array.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
@@ -63,7 +62,6 @@ const mapStateToProps = (state) => ({
   offers: state.listOffers,
   authorizationStatus: state.authorizationStatus,
   isDataLoaded: state.isDataLoaded,
-  comments: state.listComments,
 });
 
 export default connect(mapStateToProps, null)(App);

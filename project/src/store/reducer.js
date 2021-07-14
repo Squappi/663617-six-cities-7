@@ -7,10 +7,11 @@ const initialState = {
   listOffers: [],
   offer: [],
   cityOffers: [],
-  listComments: [],
+  listComments: null,
   sortType: SortType.POPULAR,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
+  isCommentPosted: true,
 };
 
 const reducer = (state = initialState, action) => {
@@ -44,6 +45,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         listComments: action.payload,
+      };
+    case ActionType.UPDATE_REVIEW:
+      return {
+        ...state,
+        isCommentPosted: action.payload,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
