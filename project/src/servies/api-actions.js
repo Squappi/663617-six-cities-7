@@ -6,6 +6,7 @@ const ApiRoute = {
   LOGIN: '/login',
   LOGOUT: '/logout',
   COMMENTS: '/comments',
+  FAVORITES: '/favorite',
 };
 
 const adaptToClient = (offer) => {
@@ -69,7 +70,14 @@ export const axiosLoadComments = (id) => (dispatch, _getState, api) => {
 
 export const axiosSendComments = (id, rating, comment) => (dispatch, _getState, api) => (
   api.post(`${ApiRoute.COMMENTS}/${id}`,{rating, comment})
-    .then(({data}) => dispatch(ActionCreator.updateReview(data.map(adaptToReviewsClient))))
+    .then(({data}) => data.map(adaptToReviewsClient))
+    .then((reviews) => dispatch(ActionCreator.loadComments(reviews)))
+);
+
+export const axiosSendFavorites = (id, value) => (dispatch, _getState, api) => (
+  api.post(`${ApiRoute.FAVORITES}/${id}/${value}`)
+    .then(({data}) => adaptToClient(data))
+    .then(({values}) => dispatch(ActionCreator.favoriteValue(values)))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (

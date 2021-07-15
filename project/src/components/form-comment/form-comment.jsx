@@ -4,8 +4,7 @@ import { useDispatch } from 'react-redux';
 import { axiosSendComments } from '../../servies/api-actions';
 
 function FormComponent(props) {
-  const {comments} = props;
-  const {id} = comments;
+  const {card} = props;
 
   const [userComment, setUserComment] = useState();
   const [userRating, setUserRating] = useState(null);
@@ -18,7 +17,7 @@ function FormComponent(props) {
       method="post"
       onSubmit={((evt)=> {
         evt.preventDefault();
-        dispatch(axiosSendComments(id, {userRating, userComment}));
+        dispatch(axiosSendComments(card.id, userRating, userComment));
       })}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
@@ -85,7 +84,7 @@ function FormComponent(props) {
 }
 
 FormComponent.propTypes = {
-  comments: PropTypes.array.isRequired,
+  card: PropTypes.object.isRequired,
 };
 
 

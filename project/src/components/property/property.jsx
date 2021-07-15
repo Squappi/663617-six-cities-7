@@ -4,11 +4,12 @@ import { AppRoute, AuthorizationStatus, TypeCard } from '../../const';
 import PropTypes from 'prop-types';
 import InsideListComponent from '../inside-list/inside-list';
 import Map from '../map/map';
-import PropertyReviews from '../property-reviews/property-reviews';
 import CitiCard from '../citi-card/citi-card';
 import { axiosLoadComments } from '../../servies/api-actions';
 import { connect } from 'react-redux';
 import LoadingScreen from '../loadingScreen/LoadingScreen';
+import FormComponent from '../form-comment/form-comment';
+import CommentComponent from '../reviews/reviews';
 
 const MAX_IMAGES = 6;
 
@@ -126,7 +127,15 @@ function PropertyComponent(props) {
                 </div>
               </div>
               {authorizationStatus === AuthorizationStatus.AUTH &&
-                comments ? <PropertyReviews comments={comments}/> : <LoadingScreen/>}
+                comments ?
+                <section className="property__reviews reviews">
+                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
+                  <ul className="reviews__list">
+                    {comments.map((reviews) => <CommentComponent key={reviews.id} reviews={reviews}/>)}
+                  </ul>
+                  <FormComponent card={card} comments={comments}/>
+                </section>
+                : <LoadingScreen/>}
             </div>
           </div>
           <section className="property__map map">

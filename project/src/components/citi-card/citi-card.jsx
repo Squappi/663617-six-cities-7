@@ -3,6 +3,8 @@ import cardsDescriptionProp from '../citi-card/citi-card.prop';
 import { Link } from 'react-router-dom';
 import propTypes from 'prop-types';
 import { TypeCard } from '../../const';
+import { useDispatch } from 'react-redux';
+import { axiosSendFavorites } from '../../servies/api-actions';
 
 const CityCardProperties ={
   [TypeCard.CITY]: {
@@ -15,9 +17,12 @@ const CityCardProperties ={
   },
 };
 
+
 function CitiCard(props) {
   const { card, onMouseEnter, onMouseLeave, typeCard} = props;
   const { type, previewImage, price, rating, description, isPremium, isFavorite} = card;
+
+  const dispatch = useDispatch();
 
   return (
     <article className={`${CityCardProperties[typeCard].cardClass} place-card`} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
@@ -36,7 +41,13 @@ function CitiCard(props) {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button button ${isFavorite && 'place-card__bookmark-button--active'}`} type="button">
+          <button
+            className={`place-card__bookmark-button button ${isFavorite && 'place-card__bookmark-button--active'}`}
+            onClick={()=>{
+              dispatch(axiosSendFavorites(card.id, Number(!isFavorite)));
+            }}
+            type="button"
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

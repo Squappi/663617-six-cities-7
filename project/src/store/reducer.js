@@ -12,6 +12,7 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
   isCommentPosted: true,
+  isFavorite: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -46,15 +47,15 @@ const reducer = (state = initialState, action) => {
         ...state,
         listComments: action.payload,
       };
-    case ActionType.UPDATE_REVIEW:
-      return {
-        ...state,
-        isCommentPosted: action.payload,
-      };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
         authorizationStatus: action.payload,
+      };
+    case ActionType.FAVORITES_VALUE:
+      return {
+        ...state,
+        isFavorite: action.payload,
       };
     case ActionType.LOGOUT:
       return {
