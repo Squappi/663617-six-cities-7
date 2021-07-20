@@ -74,10 +74,16 @@ export const axiosSendComments = (id, rating, comment) => (dispatch, _getState, 
     .then((reviews) => dispatch(ActionCreator.loadComments(reviews)))
 );
 
+export const axiosLoadedFavorites = () => (dispatch, _getState, api) => (
+  api.get(ApiRoute.FAVORITES)
+    .then(({data}) => data.map(adaptToClient))
+    .then((offers) => dispatch(ActionCreator.favoriteLoaded(offers)))
+);
+
 export const axiosSendFavorites = (id, value) => (dispatch, _getState, api) => (
   api.post(`${ApiRoute.FAVORITES}/${id}/${value}`)
     .then(({data}) => adaptToClient(data))
-    .then(({values}) => dispatch(ActionCreator.favoriteValue(values)))
+    .then((offer) => dispatch(ActionCreator.favoriteUpdate(offer)))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
@@ -90,7 +96,7 @@ export const loginAuth = ({login, password}) => (dispatch, _getState, api) => (
   api.post(ApiRoute.LOGIN, {email: login, password})
     .then(({data}) => localStorage.setItem('token', data.token))
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.FAVORITES)))
+    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT)))
 );
 
 

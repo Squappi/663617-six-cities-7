@@ -1,11 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import FavoriteCard from '../favorites-card/favotites-card';
 import PropTypes from 'prop-types';
-import { AppRoute } from '../../const';
+import { AppRoute, TypeCard } from '../../const';
+import CitiCard from '../citi-card/citi-card';
+import { useEffect } from 'react';
+import { axiosLoadedFavorites } from '../../servies/api-actions';
+import { connect } from 'react-redux';
+import { getAuthorizationStatus, getFavorites } from '../../store/selectors/selectors';
 
 function FavoritesComponent(props) {
-  const { cardsDescription } = props;
+  const { favorites, loadFavorites } = props;
+
+  useEffect(() => {
+    loadFavorites();
+  },[loadFavorites]);
+
+  // const cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
   return (
     <div className="page">
       <header className="header">
@@ -50,7 +61,13 @@ function FavoritesComponent(props) {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {cardsDescription.map((currentCard) => <FavoriteCard key = {currentCard.id} card = {currentCard} />)}
+                  {favorites.map((currentCard) =>(
+                    <CitiCard
+                      key = {currentCard.id}
+                      card = {currentCard}
+                      typeCard={TypeCard.FAVORITE}
+                    />
+                  ))}
                 </div>
               </li>
             </ul>
@@ -67,7 +84,21 @@ function FavoritesComponent(props) {
 }
 
 FavoritesComponent.propTypes = {
-  cardsDescription: PropTypes.array.isRequired,
+  favorites: PropTypes.array.isRequired,
+  loadFavorites: PropTypes.func.isRequired,
 };
 
-export default FavoritesComponent;
+const mapStateToProps = (state) => ({
+  favorites: getFavorites(state),
+  authorizationStatus: getAuthorizationStatus(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loadFavorites() {
+    dispatch(axiosLoadedFavorites());
+  },
+});
+
+export  {FavoritesComponent};
+export default connect(mapStateToProps, mapDispatchToProps)(FavoritesComponent);
+

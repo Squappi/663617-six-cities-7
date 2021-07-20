@@ -15,6 +15,10 @@ const CityCardProperties ={
     cardClass: 'near-places__card',
     imageClass: 'near-places__image-wrapper',
   },
+  [TypeCard.FAVORITE]: {
+    cardClass: 'favorites__card',
+    imageClass: 'favorites__image-wrapper',
+  },
 };
 
 

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
+import { getSortType } from '../../store/selectors/selectors';
 
 const sortByPopular = ['Popular','Price: low to high','Price: high to low','Top rated first'];
 
@@ -53,7 +54,7 @@ PlacesSort.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  currentSort: state.sortType,
+  currentSort: getSortType(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

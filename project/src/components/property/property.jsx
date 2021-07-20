@@ -5,11 +5,14 @@ import PropTypes from 'prop-types';
 import InsideListComponent from '../inside-list/inside-list';
 import Map from '../map/map';
 import CitiCard from '../citi-card/citi-card';
-import { axiosLoadComments } from '../../servies/api-actions';
-import { connect } from 'react-redux';
+import { axiosLoadComments, axiosSendFavorites, logout } from '../../servies/api-actions';
+import { connect, useDispatch } from 'react-redux';
 import LoadingScreen from '../loadingScreen/LoadingScreen';
 import FormComponent from '../form-comment/form-comment';
 import CommentComponent from '../reviews/reviews';
+import SignIn from '../sign-in/sign-in';
+import { SignOut } from '../sign-out/sign-out';
+import { getAuthorizationStatus, getListComments } from '../../store/selectors/selectors';
 
 const MAX_IMAGES = 6;
 
@@ -17,10 +20,11 @@ function PropertyComponent(props) {
   const { card, comments, nearCards, loadComments, authorizationStatus } = props;
   const { type, goods, bedrooms, rating, price, maxAdults, host, description,images, isPremium, isFavorite } = card;
   const [activeCard, setActiveCard] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     loadComments(card);
-  },[card]);
+  },[card, loadComments]);
   return (
     <div className="page">
       <header className="header">
@@ -31,22 +35,7 @@ function PropertyComponent(props) {
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
               </Link>
             </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={'/#'}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to={'/#'}>
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
+            {authorizationStatus === AuthorizationStatus.AUTH ? <SignOut /> : <SignIn/>}
           </div>
         </div>
       </header>
@@ -71,7 +60,12 @@ function PropertyComponent(props) {
                 <h1 className="property__name">
                   Beautiful &amp; luxurious studio at great location
                 </h1>
-                <button className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active' : ''}`} type="button">
+                <button className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active' : ''}`}
+                  type="button"
+                  onClick={()=>{
+                    dispatch(axiosSendFavorites(card.id, Number(!isFavorite)));
+                  }}
+                >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -172,15 +166,19 @@ PropertyComponent.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  comments: state.listComments,
-  authorizationStatus: state.authorizationStatus,
+  comments: getListComments(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadComments(card) {
     dispatch(axiosLoadComments(card.id));
   },
+  logoutProfile() {
+    dispatch(logout());
+  },
 });
+
 
 export {PropertyComponent};
 export default connect(mapStateToProps, mapDispatchToProps)(PropertyComponent);

@@ -9,7 +9,8 @@ export const ActionType = {
   LOGOUT: 'user/logout',
   REDIRECT_TO_ROUTE: 'redirect/redirectToRoute',
   LIST_OF_COMMENTS: 'comments/listOfComments',
-  FAVORITES_VALUE: 'card/favoritesValue',
+  FAVORITES_UPDATE: 'card/favoritesValue',
+  FAVORITE_LOADED: 'card/favoriteLoaded',
 };
 
 
@@ -26,8 +27,12 @@ export const ActionCreator = {
     type: ActionType.LIST_OF_COMMENTS,
     payload: reviews,
   }),
-  favoriteValue: (value) => ({
-    type: ActionType.FAVORITES_VALUE,
+  favoriteLoaded: (offers) => ({
+    type: ActionType.FAVORITE_LOADED,
+    payload: offers,
+  }),
+  favoriteUpdate: (value) => ({
+    type: ActionType.FAVORITES_UPDATE,
     payload: value,
   }),
   changeCity: (city) => ({

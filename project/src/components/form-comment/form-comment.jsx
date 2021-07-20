@@ -6,7 +6,7 @@ import { axiosSendComments } from '../../servies/api-actions';
 function FormComponent(props) {
   const {card} = props;
 
-  const [userComment, setUserComment] = useState();
+  const [userComment, setUserComment] = useState('');
   const [userRating, setUserRating] = useState(null);
 
   const dispatch = useDispatch();
@@ -17,7 +17,11 @@ function FormComponent(props) {
       method="post"
       onSubmit={((evt)=> {
         evt.preventDefault();
-        dispatch(axiosSendComments(card.id, userRating, userComment));
+        dispatch(axiosSendComments(card.id, userRating, userComment))
+          .then(()=>{
+            setUserComment('');
+            setUserRating(0);
+          });
       })}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
@@ -67,7 +71,7 @@ function FormComponent(props) {
         name="review"
         value={userComment}
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={(evt) =>{
+        onChange={(evt) => {
           const target = evt.target.value;
           setUserComment(target);
         }}
@@ -77,7 +81,7 @@ function FormComponent(props) {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={(userComment.length <= 50 || userComment.length >= 300) || !userRating}>Submit</button>
       </div>
     </form>
   );

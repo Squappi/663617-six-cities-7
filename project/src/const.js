@@ -9,6 +9,7 @@ export const AppRoute = {
 export const TypeCard = {
   CITY: 'city',
   PLACE: 'place',
+  FAVORITE: 'favorite',
 };
 
 export const SortType = {

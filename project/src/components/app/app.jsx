@@ -12,6 +12,7 @@ import { isCheckedAuth } from '../../store/action';
 import LoadingScreen from '../loadingScreen/LoadingScreen';
 import PrivateRoute from '../private-route/private-route';
 import browserHistory from '../browser-history/browser-history';
+import { getAuthorizationStatus, getDataLoaded, getOffers } from '../../store/selectors/selectors';
 
 
 function App(props) {
@@ -32,7 +33,7 @@ function App(props) {
           exact
           path={AppRoute.FAVORITES}
           render={() =>
-            <FavoritesComponent cardsDescription = {offers} />}
+            <FavoritesComponent />}
         >
         </PrivateRoute>
         <Route exact path={AppRoute.LOGIN}>
@@ -59,9 +60,9 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.listOffers,
-  authorizationStatus: state.authorizationStatus,
-  isDataLoaded: state.isDataLoaded,
+  offers: getOffers(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  isDataLoaded: getDataLoaded(state),
 });
 
 export default connect(mapStateToProps, null)(App);
