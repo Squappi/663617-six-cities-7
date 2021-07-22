@@ -35,7 +35,7 @@ function CitiCard(props) {
           <span>Premium</span>
         </div>}
       <div className={`${CityCardProperties[typeCard].imageClass} place-card__image-wrapper`}>
-        <Link to = {(typeCard === TypeCard.CITY) ? `/offer/${card.id}`: '/#'}>
+        <Link to = {`/offer/${card.id}`}>
           <img className="place-card__image" src={previewImage} width={260} height={200} alt="Place pic" />
         </Link>
       </div>
@@ -60,7 +60,7 @@ function CitiCard(props) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: rating/ 5 * 100 + '%'}}></span>
+            <span style={{width: `${rating/ 5 * 100  }%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

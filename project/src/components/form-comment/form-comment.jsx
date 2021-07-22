@@ -2,14 +2,21 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { axiosSendComments } from '../../servies/api-actions';
+import RatingComponent from '../rating-component/rating-component';
+
+const STARS_COUNT = 5;
 
 function FormComponent(props) {
   const {card} = props;
 
   const [userComment, setUserComment] = useState('');
-  const [userRating, setUserRating] = useState(null);
+  const [userRating, setUserRating] = useState(0);
 
   const dispatch = useDispatch();
+
+  const handleChangeRating = (value) => {
+    setUserRating(Number(value));
+  };
 
   return (
     <form className="reviews__form form"
@@ -27,44 +34,16 @@ function FormComponent(props) {
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating"
         onChange = {(evt) => {
-          const target = evt.target.value;
-          setUserRating(target);
+          const ratingValue = evt.target.value;
+          setUserRating(Number(ratingValue));
         }}
       >
-        <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" />
-        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" />
-        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" />
-        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" />
-        <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" />
-        <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+        {Array.from({length: STARS_COUNT}).map((_, index) => {
+          const starNumber = STARS_COUNT - index;
+          return (
+            <RatingComponent key={Math.random()*10000} starNumber={starNumber} userRating={userRating} handleChangeRating={handleChangeRating}/>
+          );
+        })}
       </div>
       <textarea className="reviews__textarea form__textarea"
         id="review"

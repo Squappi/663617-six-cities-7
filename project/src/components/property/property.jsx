@@ -5,33 +5,41 @@ import PropTypes from 'prop-types';
 import InsideListComponent from '../inside-list/inside-list';
 import Map from '../map/map';
 import CitiCard from '../citi-card/citi-card';
-import { axiosLoadComments, axiosSendFavorites, logout } from '../../servies/api-actions';
-import { connect, useDispatch } from 'react-redux';
+import { axiosLoadComments, axiosLoadedNeaby, axiosSendFavorites } from '../../servies/api-actions';
+import { useDispatch, useSelector } from 'react-redux';
 import LoadingScreen from '../loadingScreen/LoadingScreen';
 import FormComponent from '../form-comment/form-comment';
 import CommentComponent from '../reviews/reviews';
 import SignIn from '../sign-in/sign-in';
-import { SignOut } from '../sign-out/sign-out';
-import { getAuthorizationStatus, getListComments } from '../../store/selectors/selectors';
+import SignOut from '../sign-out/sign-out';
+import { getAuthorizationStatus, getListComments, getNearby } from '../../store/selectors/selectors';
 
 const MAX_IMAGES = 6;
 
 function PropertyComponent(props) {
-  const { card, comments, nearCards, loadComments, authorizationStatus } = props;
-  const { type, goods, bedrooms, rating, price, maxAdults, host, description,images, isPremium, isFavorite } = card;
+  const { card } = props;
+  const { type, goods, bedrooms, rating, price, maxAdults, host, description, images, isPremium, isFavorite } = card;
   const [activeCard, setActiveCard] = useState(null);
   const dispatch = useDispatch();
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const comments = useSelector(getListComments);
+  const nearCards = useSelector(getNearby);
 
   useEffect(() => {
-    loadComments(card);
-  },[card, loadComments]);
+    dispatch(axiosLoadComments(card.id));
+  }, [card, dispatch]);
+
+  useEffect(() => {
+    dispatch(axiosLoadedNeaby(card.id));
+  }, [card,dispatch]);
+
   return (
     <div className="page">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className="header__logo-link" to = {AppRoute.ROOT}>
+              <Link className="header__logo-link" to={AppRoute.ROOT}>
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
               </Link>
             </div>
@@ -62,7 +70,7 @@ function PropertyComponent(props) {
                 </h1>
                 <button className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active' : ''}`}
                   type="button"
-                  onClick={()=>{
+                  onClick={() => {
                     dispatch(axiosSendFavorites(card.id, Number(!isFavorite)));
                   }}
                 >
@@ -74,7 +82,7 @@ function PropertyComponent(props) {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: rating/ 5 * 100 + '%'}}></span>
+                  <span style={{width: `${rating/ 5 * 100}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">4.8</span>
@@ -97,7 +105,7 @@ function PropertyComponent(props) {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {goods.map((inside, id) => <InsideListComponent key = {id++} inside={inside}/>)}
+                  {goods.map((inside, id) => <InsideListComponent key={id++} inside={inside}/>)}
                 </ul>
               </div>
               <div className="property__host">
@@ -124,7 +132,7 @@ function PropertyComponent(props) {
                 <section className="property__reviews reviews">
                   <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
                   <ul className="reviews__list">
-                    {comments.map((reviews) => <CommentComponent key={reviews.id} reviews={reviews}/>)}
+                    {comments.slice().reverse().map((reviews) => <CommentComponent key={reviews.id} reviews={reviews}/>)}
                   </ul>
                   {authorizationStatus === AuthorizationStatus.AUTH ?
                     <FormComponent card={card} comments={comments}/> : <LoadingScreen/>}
@@ -143,7 +151,8 @@ function PropertyComponent(props) {
               {nearCards.map((placeCard) => (
                 <CitiCard
                   key={placeCard.id}
-                  onMouseEnter={() => {setActiveCard(placeCard.id);
+                  onMouseEnter={() => {
+                    setActiveCard(placeCard.id);
                   }}
                   onMouseLeave={() => setActiveCard(null)}
                   card={placeCard}
@@ -159,26 +168,7 @@ function PropertyComponent(props) {
 
 PropertyComponent.propTypes = {
   card: PropTypes.object.isRequired,
-  comments: PropTypes.array,
-  nearCards: PropTypes.array.isRequired,
-  loadComments: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  comments: getListComments(state),
-  authorizationStatus: getAuthorizationStatus(state),
-});
 
-const mapDispatchToProps = (dispatch) => ({
-  loadComments(card) {
-    dispatch(axiosLoadComments(card.id));
-  },
-  logoutProfile() {
-    dispatch(logout());
-  },
-});
-
-
-export {PropertyComponent};
-export default connect(mapStateToProps, mapDispatchToProps)(PropertyComponent);
+export default PropertyComponent;

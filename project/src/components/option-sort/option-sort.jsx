@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 import { getSortType } from '../../store/selectors/selectors';
 
 const sortByPopular = ['Popular','Price: low to high','Price: high to low','Top rated first'];
 
-function PlacesSort({currentSort, changeSort}) {
+function PlacesSort() {
+  const currentSort = useSelector(getSortType);
   const [isOpenList, setOpenList] = useState(false);
+  const dispatch = useDispatch();
   const closeMenu = () => {
     document.removeEventListener('click', closeMenu);
     setOpenList(false);
@@ -37,7 +38,7 @@ function PlacesSort({currentSort, changeSort}) {
             <li className={`places__option ${sort === currentSort ? 'places__option--active' : ''}`} key={sort} tabIndex={0}
               onClick={() => {
                 setOpenList(false);
-                changeSort(sort);
+                dispatch(ActionCreator.sortChange(sort));
               }}
             >
               {sort}
@@ -48,17 +49,4 @@ function PlacesSort({currentSort, changeSort}) {
   );
 }
 
-PlacesSort.propTypes = {
-  currentSort: PropTypes.string.isRequired,
-  changeSort: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  currentSort: getSortType(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  changeSort: (sortType) => dispatch(ActionCreator.sortChange(sortType)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlacesSort);
+export default PlacesSort;

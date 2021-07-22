@@ -69,7 +69,7 @@ export const axiosLoadComments = (id) => (dispatch, _getState, api) => {
 };
 
 export const axiosSendComments = (id, rating, comment) => (dispatch, _getState, api) => (
-  api.post(`${ApiRoute.COMMENTS}/${id}`,{rating, comment})
+  api.post(`${ApiRoute.COMMENTS}/${id}`, {rating, comment})
     .then(({data}) => data.map(adaptToReviewsClient))
     .then((reviews) => dispatch(ActionCreator.loadComments(reviews)))
 );
@@ -86,6 +86,12 @@ export const axiosSendFavorites = (id, value) => (dispatch, _getState, api) => (
     .then((offer) => dispatch(ActionCreator.favoriteUpdate(offer)))
 );
 
+export const axiosLoadedNeaby = (id) => (dispatch, _getState, api) => (
+  api.get(`${ApiRoute.OFFER_API}/${id}/nearby`)
+    .then(({data}) => data.map(adaptToClient))
+    .then((offers) => dispatch(ActionCreator.loadNearby(offers)))
+);
+
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.LOGIN)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
@@ -94,14 +100,18 @@ export const checkAuth = () => (dispatch, _getState, api) => (
 
 export const loginAuth = ({login, password}) => (dispatch, _getState, api) => (
   api.post(ApiRoute.LOGIN, {email: login, password})
-    .then(({data}) => localStorage.setItem('token', data.token))
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT)))
+    .then(({data}) => {
+      localStorage.setItem('token', data.token);
+      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
+      dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT));
+    })
 );
 
 
 export const logout = () => (dispatch, _getState, api) => (
   api.delete(ApiRoute.LOGOUT)
-    .then(() => localStorage.removeItem('token'))
-    .then(() => dispatch(ActionCreator.logout()))
+    .then(() => {
+      localStorage.removeItem('token');
+      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH));
+    })
 );

@@ -4,7 +4,7 @@ import {createReducer} from '@reduxjs/toolkit';
 const initialState = {
   offer: [],
   listComments: null,
-  favorites: [],
+  nearby: [],
 };
 
 const cityLoad = createReducer(initialState, (builder) => {
@@ -15,8 +15,8 @@ const cityLoad = createReducer(initialState, (builder) => {
     .addCase(ActionType.LIST_OF_COMMENTS, (state, action) => {
       state.listComments = action.payload;
     })
-    .addCase(ActionType.FAVORITE_LOADED, (state, action) => {
-      state.favorites = action.payload;
+    .addCase(ActionType.LOAD_NEARBY, (state, action) => {
+      state.nearby = action.payload;
     });
 });
 

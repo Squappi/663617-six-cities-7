@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import CitiCard from '../citi-card/citi-card';
-import PropTypes from 'prop-types';
 import Map from '../map/map';
 import { AuthorizationStatus, TypeCard } from '../../const';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import CityList from '../city-list/city-list';
 import PlacesSort from '../option-sort/option-sort';
-import { logout } from '../../servies/api-actions';
 import SignIn from '../sign-in/sign-in';
 import SignOut from '../sign-out/sign-out';
 import MainEmptyComponent from '../main-empty/main-empty';
 import { Link } from 'react-router-dom';
 import { getAuthorizationStatus, getCityOffers } from '../../store/selectors/selectors';
 
-function MainComponent(props) {
-  const { cityOffers, authorizationStatus } = props;
+function MainComponent() {
+  const cityOffers = useSelector(getCityOffers);
   const [activeCard, setActiveCard] = useState(null);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -71,21 +71,5 @@ function MainComponent(props) {
   );
 }
 
-MainComponent.propTypes = {
-  cityOffers: PropTypes.array.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  cityOffers: getCityOffers(state),
-  authorizationStatus: getAuthorizationStatus(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  logoutProfile() {
-    dispatch(logout());
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainComponent);
+export default MainComponent;
 

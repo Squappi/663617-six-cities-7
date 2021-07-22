@@ -7,7 +7,7 @@ import LoginComponent from '../login/login';
 import {Router as BrowserRouter, Switch, Route } from 'react-router-dom';
 import PropertyComponent from '../property/property';
 import NotFound from '../render/render';
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import { isCheckedAuth } from '../../store/action';
 import LoadingScreen from '../loadingScreen/LoadingScreen';
 import PrivateRoute from '../private-route/private-route';
@@ -16,7 +16,9 @@ import { getAuthorizationStatus, getDataLoaded, getOffers } from '../../store/se
 
 
 function App(props) {
-  const { offers, authorizationStatus, isDataLoaded } = props;
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const isDataLoaded = useSelector(getDataLoaded);
+  const offers = useSelector(getOffers);
 
   if (!isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
@@ -53,17 +55,6 @@ function App(props) {
   );
 }
 
-App.propTypes = {
-  offers: PropTypes.array.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-};
 
-const mapStateToProps = (state) => ({
-  offers: getOffers(state),
-  authorizationStatus: getAuthorizationStatus(state),
-  isDataLoaded: getDataLoaded(state),
-});
-
-export default connect(mapStateToProps, null)(App);
+export default App;
 

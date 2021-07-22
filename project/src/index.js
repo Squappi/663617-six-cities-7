@@ -10,7 +10,12 @@ import { redirect } from './components/middlewares/redirect';
 import rootReducer from './store/root-reducer/root-reducer';
 import {configureStore} from '@reduxjs/toolkit';
 const api = createApi(
-  () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)),
+  (err) => {
+    if (err.config.url !== '/login') {
+      store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH));
+      store.dispatch(ActionCreator.redirectToRoute('/login'));
+    }
+  },
 );
 
 const store = configureStore({

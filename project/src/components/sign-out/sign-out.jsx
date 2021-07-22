@@ -2,11 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { logout } from '../../servies/api-actions';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 function SignOut(props) {
-  const {logOut} = props;
+  const dispatch = useDispatch();
 
   return (
     <nav className="header__nav">
@@ -24,7 +23,7 @@ function SignOut(props) {
             to="/#"
             onClick={(evt) => {
               evt.preventDefault();
-              logOut();
+              dispatch(logout());
             }}
           >
             <span className="header__signout">Sign out</span>
@@ -35,16 +34,4 @@ function SignOut(props) {
   );
 }
 
-SignOut.propTypes = {
-  logOut: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  logOut() {
-    dispatch(logout());
-  },
-});
-
-export {SignOut};
-
-export default connect(null, mapDispatchToProps)(SignOut);
+export default SignOut;

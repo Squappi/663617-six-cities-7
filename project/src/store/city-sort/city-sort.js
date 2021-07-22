@@ -8,6 +8,7 @@ const initialState = {
   sortType: SortType.POPULAR,
   cityOffers: [],
   listOffers: [],
+  favorites: [],
   isDataLoaded: false,
 };
 
@@ -27,6 +28,9 @@ const citySort = createReducer(initialState, (builder) => {
       state.sortType = action.payload;
       state.cityOffers = sortList(state.listOffers.filter((offer) => offer.city.name === state.city), action.payload);
     })
+    .addCase(ActionType.FAVORITE_LOADED, (state, action) => {
+      state.favorites = action.payload;
+    })
     .addCase(ActionType.FAVORITES_UPDATE, (state, action) => {
       const updatedCard = action.payload;
       const newOfferList = [...state.listOffers];
@@ -40,8 +44,14 @@ const citySort = createReducer(initialState, (builder) => {
       if (cardIndex >= 0) {
         newCityOffers[cardIndex] = updatedCard;
       }
+      const newFavorites = [...state.favorites];
+      cardIndex = newFavorites.findIndex((item) => item.id === updatedCard.id);
+      if (cardIndex >= 0) {
+        newFavorites.splice(cardIndex, 1);
+      }
       state.listOffers = newOfferList;
       state.cityOffers = newCityOffers;
+      state.favorites = newFavorites;
     });
 });
 

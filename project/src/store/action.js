@@ -11,6 +11,7 @@ export const ActionType = {
   LIST_OF_COMMENTS: 'comments/listOfComments',
   FAVORITES_UPDATE: 'card/favoritesValue',
   FAVORITE_LOADED: 'card/favoriteLoaded',
+  LOAD_NEARBY: 'neaby/loadNearby',
 };
 
 
@@ -31,6 +32,10 @@ export const ActionCreator = {
     type: ActionType.FAVORITE_LOADED,
     payload: offers,
   }),
+  loadNearby: (offers) => ({
+    type: ActionType.LOAD_NEARBY,
+    payload: offers,
+  }),
   favoriteUpdate: (value) => ({
     type: ActionType.FAVORITES_UPDATE,
     payload: value,
@@ -46,9 +51,6 @@ export const ActionCreator = {
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
   }),
   redirectToRoute: (url) => ({
     type: ActionType.REDIRECT_TO_ROUTE,

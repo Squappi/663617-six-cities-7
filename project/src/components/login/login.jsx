@@ -1,14 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link, useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginAuth } from '../../servies/api-actions';
+import { getAuthorizationStatus } from '../../store/selectors/selectors';
 
-function LoginComponent({onSubmit, authorizationStatus}) {
+function LoginComponent() {
   const loginRef = useRef();
   const passwordRef = useRef();
   const history = useHistory();
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
@@ -16,12 +17,16 @@ function LoginComponent({onSubmit, authorizationStatus}) {
     }
   });
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    onSubmit({
-      login: loginRef.current.value,
-      password: passwordRef.current.value,
-    });
+    if(loginRef.current.value && passwordRef.current.value) {
+      dispatch(loginAuth({
+        login: loginRef.current.value,
+        password: passwordRef.current.value,
+      }));
+    }
   };
 
   return (
@@ -76,6 +81,7 @@ function LoginComponent({onSubmit, authorizationStatus}) {
                   name="password"
                   placeholder="Password"
                   required=""
+                  pattern="^[^\s]+(\s.*)?$"
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">
@@ -96,16 +102,5 @@ function LoginComponent({onSubmit, authorizationStatus}) {
   );
 }
 
-LoginComponent.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-};
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(loginAuth(authData));
-  },
-});
-
-export {LoginComponent};
-export default connect(null, mapDispatchToProps)(LoginComponent);
+export default LoginComponent;
