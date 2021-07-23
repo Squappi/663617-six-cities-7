@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { axiosSendComments } from '../../servies/api-actions';
+import {useDispatch} from 'react-redux';
+import {axiosSendComments} from '../../servies/api-actions';
 import RatingComponent from '../rating-component/rating-component';
 
 const STARS_COUNT = 5;
+const ratingTitles = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
 
 function FormComponent(props) {
   const {card} = props;
@@ -41,7 +42,13 @@ function FormComponent(props) {
         {Array.from({length: STARS_COUNT}).map((_, index) => {
           const starNumber = STARS_COUNT - index;
           return (
-            <RatingComponent key={Math.random()*10000} starNumber={starNumber} userRating={userRating} handleChangeRating={handleChangeRating}/>
+            <RatingComponent
+              key={starNumber}
+              starsTitle={ratingTitles[index]}
+              starNumber={starNumber}
+              userRating={userRating}
+              handleChangeRating={handleChangeRating}
+            />
           );
         })}
       </div>

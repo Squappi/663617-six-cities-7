@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import { useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {ActionCreator} from '../../store/action';
-import { getSortType } from '../../store/selectors/selectors';
+import {getSortType} from '../../store/selectors/selectors';
 
 const sortByPopular = ['Popular','Price: low to high','Price: high to low','Top rated first'];
 

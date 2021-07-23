@@ -1,10 +1,10 @@
-import { SortType } from '../../const';
-import { sortList } from '../../sorting';
-import { ActionType } from '../action';
+import {SortType} from '../../const';
+import {sortList} from '../../sorting';
+import {ActionType} from '../action';
 import {createReducer} from '@reduxjs/toolkit';
 
 const initialState = {
-  city: 'Amsterdam',
+  city: 'Paris',
   sortType: SortType.POPULAR,
   cityOffers: [],
   listOffers: [],

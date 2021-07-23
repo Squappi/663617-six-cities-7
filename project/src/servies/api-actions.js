@@ -54,48 +54,56 @@ export const axiosLoadOffers = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.OFFER_API)
     .then(({data}) => data.map(adaptToClient))
     .then((offers) => dispatch(ActionCreator.loadOffers(offers)))
+    .catch(() => {})
 );
 
 export const axiosLoadOffersId = (id) => (dispatch, _getState, api) => (
   api.get(`${ApiRoute.OFFER_API}/${id}`)
     .then((data) => data.dispatch(ActionCreator.loadOffer(adaptToClient(data))))
+    .catch(() => {})
 );
 
 export const axiosLoadComments = (id) => (dispatch, _getState, api) => {
   dispatch(ActionCreator.loadComments(null));
   return api.get(`${ApiRoute.COMMENTS}/${id}`)
     .then(({data}) => data.map(adaptToReviewsClient))
-    .then((reviews) => dispatch(ActionCreator.loadComments(reviews)));
+    .then((reviews) => dispatch(ActionCreator.loadComments(reviews)))
+    .catch(() => {});
 };
 
 export const axiosSendComments = (id, rating, comment) => (dispatch, _getState, api) => (
   api.post(`${ApiRoute.COMMENTS}/${id}`, {rating, comment})
     .then(({data}) => data.map(adaptToReviewsClient))
     .then((reviews) => dispatch(ActionCreator.loadComments(reviews)))
+    .catch(() => {})
 );
 
 export const axiosLoadedFavorites = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.FAVORITES)
     .then(({data}) => data.map(adaptToClient))
     .then((offers) => dispatch(ActionCreator.favoriteLoaded(offers)))
+    .catch(() => {})
 );
 
 export const axiosSendFavorites = (id, value) => (dispatch, _getState, api) => (
   api.post(`${ApiRoute.FAVORITES}/${id}/${value}`)
     .then(({data}) => adaptToClient(data))
     .then((offer) => dispatch(ActionCreator.favoriteUpdate(offer)))
+    .catch(() => {})
 );
 
 export const axiosLoadedNeaby = (id) => (dispatch, _getState, api) => (
   api.get(`${ApiRoute.OFFER_API}/${id}/nearby`)
     .then(({data}) => data.map(adaptToClient))
     .then((offers) => dispatch(ActionCreator.loadNearby(offers)))
+    .catch(() => {})
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.LOGIN)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .catch(() => {})
 );
 
 export const loginAuth = ({login, password}) => (dispatch, _getState, api) => (

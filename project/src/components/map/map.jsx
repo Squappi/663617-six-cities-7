@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useRef } from 'react';
+import {useRef} from 'react';
 import useMap from '../../hooks/use-map/use-map';
 import PropTypes from 'prop-types';
 

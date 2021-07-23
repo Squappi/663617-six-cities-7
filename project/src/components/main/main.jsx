@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import CitiCard from '../citi-card/citi-card';
 import Map from '../map/map';
-import { AuthorizationStatus, TypeCard } from '../../const';
+import {AuthorizationStatus, TypeCard} from '../../const';
 import {useSelector} from 'react-redux';
 import CityList from '../city-list/city-list';
 import PlacesSort from '../option-sort/option-sort';
 import SignIn from '../sign-in/sign-in';
 import SignOut from '../sign-out/sign-out';
 import MainEmptyComponent from '../main-empty/main-empty';
-import { Link } from 'react-router-dom';
-import { getAuthorizationStatus, getCityOffers } from '../../store/selectors/selectors';
+import {Link} from 'react-router-dom';
+import {getAuthorizationStatus, getCityOffers} from '../../store/selectors/selectors';
 
 function MainComponent() {
   const cityOffers = useSelector(getCityOffers);

@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus, TypeCard } from '../../const';
+import React, {useEffect, useState} from 'react';
+import {Link } from 'react-router-dom';
+import {AppRoute, AuthorizationStatus, TypeCard} from '../../const';
 import PropTypes from 'prop-types';
 import InsideListComponent from '../inside-list/inside-list';
 import Map from '../map/map';
 import CitiCard from '../citi-card/citi-card';
-import { axiosLoadComments, axiosLoadedNeaby, axiosSendFavorites } from '../../servies/api-actions';
-import { useDispatch, useSelector } from 'react-redux';
+import {axiosLoadComments, axiosLoadedNeaby, axiosSendFavorites} from '../../servies/api-actions';
+import {useDispatch, useSelector} from 'react-redux';
 import LoadingScreen from '../loadingScreen/LoadingScreen';
 import FormComponent from '../form-comment/form-comment';
 import CommentComponent from '../reviews/reviews';
 import SignIn from '../sign-in/sign-in';
 import SignOut from '../sign-out/sign-out';
-import { getAuthorizationStatus, getListComments, getNearby } from '../../store/selectors/selectors';
+import {getAuthorizationStatus, getListComments, getNearby} from '../../store/selectors/selectors';
 
 const MAX_IMAGES = 6;
+const MAX_REVIEWS_COUNT = 10;
 
 function PropertyComponent(props) {
   const { card } = props;
@@ -132,7 +133,7 @@ function PropertyComponent(props) {
                 <section className="property__reviews reviews">
                   <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
                   <ul className="reviews__list">
-                    {comments.slice().reverse().map((reviews) => <CommentComponent key={reviews.id} reviews={reviews}/>)}
+                    {comments.slice(0, MAX_REVIEWS_COUNT).reverse().map((reviews) => <CommentComponent key={reviews.id} reviews={reviews}/>)}
                   </ul>
                   {authorizationStatus === AuthorizationStatus.AUTH ?
                     <FormComponent card={card} comments={comments}/> : <LoadingScreen/>}

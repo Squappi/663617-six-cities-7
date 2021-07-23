@@ -1,18 +1,17 @@
 import React from 'react';
 import MainComponent from '../main/main';
-import PropTypes from 'prop-types';
-import { AppRoute } from '../../const';
+import {AppRoute} from '../../const';
 import FavoritesComponent from '../favorites/favorites';
 import LoginComponent from '../login/login';
 import {Router as BrowserRouter, Switch, Route } from 'react-router-dom';
 import PropertyComponent from '../property/property';
 import NotFound from '../render/render';
-import {connect, useSelector} from 'react-redux';
-import { isCheckedAuth } from '../../store/action';
+import {useSelector} from 'react-redux';
+import {isCheckedAuth} from '../../store/action';
 import LoadingScreen from '../loadingScreen/LoadingScreen';
 import PrivateRoute from '../private-route/private-route';
 import browserHistory from '../browser-history/browser-history';
-import { getAuthorizationStatus, getDataLoaded, getOffers } from '../../store/selectors/selectors';
+import {getAuthorizationStatus, getDataLoaded, getOffers} from '../../store/selectors/selectors';
 
 
 function App(props) {

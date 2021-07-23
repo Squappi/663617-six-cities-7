@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {ActionCreator} from '../../store/action';
-import { getCurrentCity } from '../../store/selectors/selectors';
+import {getCurrentCity} from '../../store/selectors/selectors';
 
 
 const cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];

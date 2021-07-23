@@ -1,10 +1,10 @@
 import React from 'react';
 import cardsDescriptionProp from '../citi-card/citi-card.prop';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import propTypes from 'prop-types';
-import { TypeCard } from '../../const';
-import { useDispatch } from 'react-redux';
-import { axiosSendFavorites } from '../../servies/api-actions';
+import {TypeCard} from '../../const';
+import {useDispatch} from 'react-redux';
+import {axiosSendFavorites} from '../../servies/api-actions';
 
 const CityCardProperties ={
   [TypeCard.CITY]: {
@@ -65,7 +65,7 @@ function CitiCard(props) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to = {'/#'}>{description}</Link>
+          <Link to={`/offer/${card.id}`}>{description}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

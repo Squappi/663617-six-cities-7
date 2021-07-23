@@ -1,4 +1,4 @@
-import { NameSpace } from '../root-reducer/root-reducer';
+import {NameSpace} from '../root-reducer/root-reducer';
 
 export const getAuthorizationStatus = (state) => state[NameSpace.USER].authorizationStatus;
 export const getOffers = (state) => state[NameSpace.SORT].listOffers;

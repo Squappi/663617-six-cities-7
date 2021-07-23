@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus, TypeCard } from '../../const';
+import {Link} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus, TypeCard} from '../../const';
 import CitiCard from '../citi-card/citi-card';
-import { useEffect } from 'react';
-import { axiosLoadedFavorites } from '../../servies/api-actions';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAuthorizationStatus, getFavorites } from '../../store/selectors/selectors';
+import {useEffect} from 'react';
+import {axiosLoadedFavorites} from '../../servies/api-actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {getAuthorizationStatus, getFavorites} from '../../store/selectors/selectors';
 import SignIn from '../sign-in/sign-in';
 import SignOut from '../sign-out/sign-out';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';

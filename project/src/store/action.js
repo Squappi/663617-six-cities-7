@@ -1,4 +1,4 @@
-import { AuthorizationStatus } from '../const';
+import {AuthorizationStatus} from '../const';
 
 export const ActionType = {
   LIST_OF_OFFERS: 'offers/listOfOffers',

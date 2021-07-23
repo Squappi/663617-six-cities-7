@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import { logout } from '../../servies/api-actions';
-import { useDispatch } from 'react-redux';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
+import {logout} from '../../servies/api-actions';
+import {useDispatch} from 'react-redux';
 
 function SignOut(props) {
   const dispatch = useDispatch();

@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import {Provider} from 'react-redux';
 import {ActionCreator} from './store/action';
-import { axiosLoadOffers, checkAuth } from './servies/api-actions';
-import { createApi } from './servies/api';
-import { AuthorizationStatus } from './const';
-import { redirect } from './components/middlewares/redirect';
+import {axiosLoadOffers, checkAuth} from './servies/api-actions';
+import {createApi} from './servies/api';
+import {AuthorizationStatus} from './const';
+import {redirect} from './components/middlewares/redirect';
 import rootReducer from './store/root-reducer/root-reducer';
 import {configureStore} from '@reduxjs/toolkit';
 const api = createApi(

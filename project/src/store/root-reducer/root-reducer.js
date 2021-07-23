@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
-import { cityLoad } from '../city-load/city-load';
-import { citySort } from '../city-sort/city-sort';
-import { user } from '../user/user';
+import {cityLoad} from '../city-load/city-load';
+import {citySort} from '../city-sort/city-sort';
+import {user} from '../user/user';
 
 export const NameSpace = {
   USER: 'USER',
